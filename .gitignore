@@ -1,4 +1,4 @@
 __pycache__/
 landscapes/
 data/
-FSRCNN_x3.pb
+cae_state_colourizer.pth
