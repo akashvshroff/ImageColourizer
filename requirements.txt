@@ -1,4 +1,4 @@
-PIL
+pillow
 modelbit
 numpy
 streamlit
