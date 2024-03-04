@@ -2,3 +2,4 @@ __pycache__/
 landscapes/
 data/
 cae_state_colourizer.pth
+*.jpg
