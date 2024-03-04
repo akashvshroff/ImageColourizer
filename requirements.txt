@@ -1,0 +1,5 @@
+PIL
+modelbit
+numpy
+streamlit
+streamlit_lottie
