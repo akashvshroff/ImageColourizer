@@ -25,22 +25,26 @@ def decode_b64(encoded_b64):
     return data
 
 
-def process_image(path):
-    with Image.open(path) as img:
-        img = img.convert("RGB")
-        width, height = img.size
-        scale = min(1, 512 / width, 512 / height)
-        new_width = 2 ** int(math.log(width * scale, 2))
-        new_height = 2 ** int(math.log(height * scale, 2))
+def resize_image(img):
+    width, height = img.size
+    scale = min(1, 512 / width, 512 / height)
+    new_width = 2 ** int(math.log(width * scale, 2))
+    new_height = 2 ** int(math.log(height * scale, 2))
 
-        resized_img = img.resize((new_width, new_height), Image.LANCZOS)
-
-        return np.array(resized_img)
+    resized_img = img.resize((new_width, new_height), Image.LANCZOS)
+    return resized_img
 
 
-def colourize_image_with_path(path):
+def process_image(img):
+    img = img.convert("RGB")
+    resized_img = resize_image(img)
+
+    return np.array(resized_img)
+
+
+def colourize_image(img):
     try:
-        image_arr = process_image(path)
+        image_arr = process_image(img)
         response = mb.get_inference(
             region="us-east-1",
             workspace="akashshroff",
@@ -52,4 +56,4 @@ def colourize_image_with_path(path):
         return colourized_arr
     except Exception as e:
         print(f"uh oh, an error occured. {e}")
-        return None
+        return False
